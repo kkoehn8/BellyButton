@@ -64,9 +64,14 @@ function buildCharts(sample) {
     // 4. Create a variable that filters the samples for the object with the desired sample number.
     var filteredSamples = samples.filter(filteredObj => filteredObj.id ==sample);
 
+    var metadata = data.metadata;
+    var filteredMetadata = metadata.filter(filteredObj => filteredObj.id ==sample);
+
     //  5. Create a variable that holds the first sample in the array.
     var result = filteredSamples[0];
     console.log(result);
+
+    var metadataResult = filteredMetadata[0];
 
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
@@ -75,7 +80,8 @@ function buildCharts(sample) {
     var otu_labels = result.otu_labels;
     
     var sample_values = result.sample_values;
-    
+
+    var wfreq = parseFloat(metadataResult.wfreq);
 
 
     // 7. Create the yticks for the bar chart.
@@ -130,6 +136,42 @@ function buildCharts(sample) {
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
 
+
+    // 4. Create the trace for the gauge chart.
+    var gaugeData = [
+      {
+        type: "indicator",
+        mode: "gauge+number",
+        value: wfreq,
+        title: { text: "<b>Belly Button Washing Frequency</b> <br> Scrubs per Week" , font: {size: 18}},
+        gauge: {
+          axis: { range: [null, 10], tickwidth: 1, tickcolor: "darkblue" },
+          bar: {color: 'black'},
+          bgcolor: "white",
+          borderwidth: 2,
+          bordercolor: "gray",       
+          steps: [
+            { range: [0, 2], color: "red" },
+            { range: [2, 4], color: "orange" },
+            { range: [4, 6], color: "yellow" },
+            { range: [6, 8], color: "lightgreen" },
+            { range: [8, 10], color: "green" },
+          ],
+        }
+      }
+    ];
+      
+    // 5. Create the layout for the gauge chart.
+    var gaugeLayout = { 
+      width: 400,
+      height: 300,
+      margin: { t: 25, r: 25, l: 25, b: 25 },
+      paper_bgcolor: "white",
+      font: { color: "black", family: "Arial" }
+    };
+  
+    // 6. Use Plotly to plot the gauge data and layout.
+    Plotly.newPlot("gauge", gaugeData, gaugeLayout);
 
   });
 }

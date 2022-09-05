@@ -1,12 +1,17 @@
 /* Style sheet for Belly Button Analysis*/
 
-/* body {
-    color: #f7f7f7;
- 
-  } */
+  .jumbotron h1{
+    color: white;
+  }
+
+  .jumbotron p{
+    color: white;
+  }
 
   .jumbotron {
     background-image: url("../images/cows.jpg");
     background-size: 100% 100%;
     text-align: center;
+    text-color: white;
+    text-shadow: 0;    
   }
